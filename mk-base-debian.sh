@@ -92,7 +92,7 @@ debootstrap --variant=buildd \
     --arch="arm64" \
     --foreign \
     --include="ccache,locales,git,ca-certificates,devscripts,libfile-fcntllock-perl,debhelper,rsync,python3,apt-utils,perl-openssl-defaults" \
-    "buster" \
+    "bookworm" \
     "${TARGET_ROOTFS_DIR}" \
     "http://mirrors.ustc.edu.cn/debian/"
 
@@ -101,14 +101,17 @@ cp -b /etc/resolv.conf $TARGET_ROOTFS_DIR/etc/resolv.conf
 
 # 修改目标根文件系统的 apt 软件源
 cat <<-EOF > "$TARGET_ROOTFS_DIR"/etc/apt/sources.list
-    deb http://mirrors.ustc.edu.cn/debian/ buster main contrib non-free
-    # deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ buster main contrib non-free
-    deb http://mirrors.ustc.edu.cn/debian/ buster-updates main contrib non-free
-    # deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ buster-updates main contrib non-free
-    deb http://mirrors.ustc.edu.cn/debian/ buster-backports main contrib non-free
-    # deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ buster-backports main contrib non-free
-    deb https://mirrors.huaweicloud.com/debian-security buster/updates main contrib non-free
-    # deb-src https://mirrors.tuna.tsinghua.edu.cn/debian-security buster/updates main contrib non-free
+        deb https://repo.huaweicloud.com/debian/ bookworm main contrib non-free
+        #deb-src https://repo.huaweicloud.com/debian/ bookworm main contrib non-free
+
+        deb https://repo.huaweicloud.com/debian/ bookworm-updates main contrib non-free
+        #deb-src https://repo.huaweicloud.com/debian/ bookworm-updates main contrib non-free
+
+        deb https://repo.huaweicloud.com/debian/ bookworm-backports main contrib non-free
+        #deb-src https://repo.huaweicloud.com/debian/ bookworm-backports main contrib non-free
+
+        deb https://mirrors.huaweicloud.com/debian-security bookworm-security main contrib non-free        
+        #deb-src https://security.debian.org/debian-security bookworm-security main contrib non-free  
 EOF
 # 根据系统架构，复制相应的 qemu 可执行文件，以便在 chroot 环境中运行
 cp -b /usr/bin/qemu-aarch64-static $TARGET_ROOTFS_DIR/usr/bin/
@@ -189,9 +192,6 @@ if [ "$TARGET" == "xfce" ]; then
 elif [ "$TARGET" == "lite" ]; then
     \${APT_INSTALL}  
 fi
-
-# 安装 Python 库和工具
-pip3 install python-periphery Adafruit-Blinka -i https://mirrors.aliyun.com/pypi/simple/
 
 HOST=topeet  # 设置主机名
 

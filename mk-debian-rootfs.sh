@@ -76,7 +76,7 @@ install_packages() {
             RGA=rga
             ;;
         rk3588)
-            MALI=valhall-g610-g13p0
+            MALI=valhall-g610-g6p0
             ISP=rkaiq_rk3588
             BOARD_NAME="iTOP-RK3588"
             RGA=rga2
@@ -249,11 +249,6 @@ cat << EOF | chroot $TARGET_ROOTFS_DIR
     echo -e "\033[42;36m ------ Setup Video---------- \033[0m"
     \${APT_INSTALL} /packages/mpp/*
     \${APT_INSTALL} /packages/gst-rkmpp/*.deb
-    \${APT_INSTALL} /packages/gstreamer/*.deb
-    \${APT_INSTALL} /packages/gst-plugins-base1.0/*.deb
-    \${APT_INSTALL} /packages/gst-plugins-bad1.0/*.deb
-    \${APT_INSTALL} /packages/gst-plugins-good1.0/*.deb
-    \${APT_INSTALL} /packages/gst-plugins-ugly1.0/*.deb
 
     # 安装和配置摄像头相关的工具
     echo -e "\033[42;36m ----- Install Camera ----- - \033[0m"
@@ -274,18 +269,13 @@ cat << EOF | chroot $TARGET_ROOTFS_DIR
     ln -s /usr/lib/aarch64-linux-gnu/libmali_hook.so.1.9.0 /usr/lib/aarch64-linux-gnu/libmali-hook.so.1
     \${APT_INSTALL} libc++-dev libc++1
 
-    # 直接指定路径和文件名
     if [ ! -f "/packages/arm64/chromium/chromium-x11_91.0.4472.164_arm64.deb" ]; then
         cat "/packages/arm64/chromium/chromium-x11_91.0.4472.164_arm64_part_aa" \
             "/packages/arm64/chromium/chromium-x11_91.0.4472.164_arm64_part_ab" \
-            > "/packages/arm64/chromium/chromium-x11_91.0.4472.164_arm64.deb" && \
+            > "/packages/arm64/chromium/chromium-x11_91.0.4472.164_arm64.deb" 
     fi
 
     \${APT_INSTALL} /packages/chromium/*.deb
-
-    # 安装 libdrm 和其他相关的软件包
-    echo -e "\033[42;36m ------- Install libdrm ------ \033[0m"
-    \${APT_INSTALL} /packages/libdrm/*.deb
 
     # 安装 libdrm-cursor
     echo -e "\033[42;36m ------ libdrm-cursor -------- \033[0m"
@@ -293,7 +283,7 @@ cat << EOF | chroot $TARGET_ROOTFS_DIR
 
     # 安装 glmark2 用于图形性能测试
     echo -e "\033[42;36m ------ Install glmark2 ------ \033[0m"
-    \${APT_INSTALL} glmark2-es2
+    \${APT_INSTALL} /packages/glmark2/*.deb
 
     # 安装 rknpu 库，用于处理 Rockchip NPU（神经网络处理器）任务
     echo -e "\033[42;36m ------- move rknpu2 --------- \033[0m"
@@ -304,6 +294,14 @@ cat << EOF | chroot $TARGET_ROOTFS_DIR
     # 安装 Rockchip 工具包
     echo -e "\033[42;36m ----- Install rktoolkit ----- \033[0m"
     \${APT_INSTALL} /packages/rktoolkit/*.deb
+
+    # 安装 ffmpeg 工具包
+    echo -e "\033[42;36m ----- Install ffmpeg ----- \033[0m"
+    \${APT_INSTALL} /packages/ffmpeg/*.deb
+
+    # 安装 mpv 工具包
+    echo -e "\033[42;36m ----- Install mpv ----- \033[0m"
+    \${APT_INSTALL} /packages/mpv/*.deb
 
     # 自动删除不再需要的软件包
     apt autoremove -y
