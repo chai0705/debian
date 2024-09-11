@@ -254,6 +254,7 @@ cat << EOF | chroot $TARGET_ROOTFS_DIR
     \${APT_INSTALL} /packages/gst-plugins-bad1.0/*.deb
     \${APT_INSTALL} /packages/gst-plugins-good1.0/*.deb
     \${APT_INSTALL} /packages/gst-plugins-ugly1.0/*.deb
+    \${APT_INSTALL} /packages/gst-libav1.0/*.deb
 
     # 安装和配置摄像头相关的工具
     echo -e "\033[42;36m ----- Install Camera ----- - \033[0m"
@@ -273,15 +274,13 @@ cat << EOF | chroot $TARGET_ROOTFS_DIR
     echo -e "\033[42;36m ------ update chromium ----- \033[0m"
     ln -s /usr/lib/aarch64-linux-gnu/libmali_hook.so.1.9.0 /usr/lib/aarch64-linux-gnu/libmali-hook.so.1
     \${APT_INSTALL} libc++-dev libc++1
+    \${APT_INSTALL} /packages/chromium/*.deb
 
-    # 直接指定路径和文件名
     if [ ! -f "/packages/arm64/chromium/chromium-x11_91.0.4472.164_arm64.deb" ]; then
         cat "/packages/arm64/chromium/chromium-x11_91.0.4472.164_arm64_part_aa" \
             "/packages/arm64/chromium/chromium-x11_91.0.4472.164_arm64_part_ab" \
-            > "/packages/arm64/chromium/chromium-x11_91.0.4472.164_arm64.deb" && \
+            > "/packages/arm64/chromium/chromium-x11_91.0.4472.164_arm64.deb"
     fi
-
-    \${APT_INSTALL} /packages/chromium/*.deb
 
     # 安装 libdrm 和其他相关的软件包
     echo -e "\033[42;36m ------- Install libdrm ------ \033[0m"
@@ -293,7 +292,7 @@ cat << EOF | chroot $TARGET_ROOTFS_DIR
 
     # 安装 glmark2 用于图形性能测试
     echo -e "\033[42;36m ------ Install glmark2 ------ \033[0m"
-    \${APT_INSTALL} glmark2-es2
+    \${APT_INSTALL} /packages/glmark2/*.deb
 
     # 安装 rknpu 库，用于处理 Rockchip NPU（神经网络处理器）任务
     echo -e "\033[42;36m ------- move rknpu2 --------- \033[0m"
