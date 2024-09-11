@@ -274,14 +274,12 @@ cat << EOF | chroot $TARGET_ROOTFS_DIR
     echo -e "\033[42;36m ------ update chromium ----- \033[0m"
     ln -s /usr/lib/aarch64-linux-gnu/libmali_hook.so.1.9.0 /usr/lib/aarch64-linux-gnu/libmali-hook.so.1
     \${APT_INSTALL} libc++-dev libc++1
-    \${APT_INSTALL} /packages/chromium/*.deb
-
-    if [ ! -f "/packages/arm64/chromium/chromium-x11_91.0.4472.164_arm64.deb" ]; then
-        cat "/packages/arm64/chromium/chromium-x11_91.0.4472.164_arm64_part_aa" \
-            "/packages/arm64/chromium/chromium-x11_91.0.4472.164_arm64_part_ab" \
-            > "/packages/arm64/chromium/chromium-x11_91.0.4472.164_arm64.deb"
+    if [ ! -f "/packages/chromium/chromium-x11_91.0.4472.164_arm64.deb" ]; then
+        cat "/packages/chromium/chromium-x11_91.0.4472.164_arm64_part_aa" \
+            "/packages/chromium/chromium-x11_91.0.4472.164_arm64_part_ab" \
+            > "/packages/chromium/chromium-x11_91.0.4472.164_arm64.deb"
     fi
-
+    \${APT_INSTALL} /packages/chromium/*.deb
     # 安装 libdrm 和其他相关的软件包
     echo -e "\033[42;36m ------- Install libdrm ------ \033[0m"
     \${APT_INSTALL} /packages/libdrm/*.deb
