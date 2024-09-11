@@ -14,8 +14,8 @@ if [ -z "$1" ]; then
     # 如果 $1 为空，设置 ROOTFSIMAGE 为 rootfs.img
     ROOTFSIMAGE="rootfs.img"
 else
-    # 如果 $1 非空，设置 ROOTFSIMAGE 为 ubuntu-$1-rootfs.img
-    ROOTFSIMAGE="ubuntu-$1-rootfs.img"
+    # 如果 $1 非空，设置 ROOTFSIMAGE 为 debian-$1-rootfs.img
+    ROOTFSIMAGE="debian-$1-rootfs.img"
 fi
 
 EXTRA_SIZE_MB=300  # 额外添加的空间大小，以MB为单位
