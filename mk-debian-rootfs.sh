@@ -275,10 +275,10 @@ cat << EOF | chroot $TARGET_ROOTFS_DIR
     \${APT_INSTALL} libc++-dev libc++1
 
     # 直接指定路径和文件名
-    if [ ! -f "/packages/arm64/chromium/chromium-x11_91.0.4472.164_arm64.deb" ]; then
-        cat "/packages/arm64/chromium/chromium-x11_91.0.4472.164_arm64_part_aa" \
-            "/packages/arm64/chromium/chromium-x11_91.0.4472.164_arm64_part_ab" \
-            > "/packages/arm64/chromium/chromium-x11_91.0.4472.164_arm64.deb" && \
+    if [ ! -f "/packages/chromium/chromium-x11_91.0.4472.164_arm64.deb" ]; then
+        cat "/packages/chromium/chromium-x11_91.0.4472.164_arm64_part_aa" \
+            "/packages/chromium/chromium-x11_91.0.4472.164_arm64_part_ab" \
+            > "/packages/chromium/chromium-x11_91.0.4472.164_arm64.deb" && \
     fi
 
     \${APT_INSTALL} /packages/chromium/*.deb
