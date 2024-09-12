@@ -234,7 +234,8 @@ cat << EOF | chroot $TARGET_ROOTFS_DIR
     # 安装在 packages 目录中的驱动包和内核包
     \${APT_INSTALL} /packages/install_packages/*.deb
     \${APT_INSTALL} /boot/kerneldeb/* || true
-
+    cp /packages/libmali/mali_csffw.bin /usr/lib/firmware/ 
+    
     # 选择对应soc的xml文件
     cp /etc/iqfiles/$SOC/* /etc/iqfiles/
     rm -rf /etc/iqfiles/rk3568 /etc/iqfiles/rk3588 /etc/iqfiles/rk3562
@@ -249,6 +250,7 @@ cat << EOF | chroot $TARGET_ROOTFS_DIR
     echo -e "\033[42;36m ------ Setup Video---------- \033[0m"
     \${APT_INSTALL} /packages/mpp/*
     \${APT_INSTALL} /packages/gst-rkmpp/*.deb
+    apt-get install -fy libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-bad1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-base-apps gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio
 
     # 安装和配置摄像头相关的工具
     echo -e "\033[42;36m ----- Install Camera ----- - \033[0m"
