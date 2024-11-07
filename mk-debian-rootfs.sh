@@ -22,6 +22,7 @@ select_soc() {
         echo -e "\033[42;36m [1] rk3562 \033[0m"
         echo -e "\033[42;36m [2] rk3568 \033[0m"
         echo -e "\033[42;36m [3] rk3588/rk3588s \033[0m"
+		echo -e "\033[42;36m [4] rk3576 \033[0m"
         echo -e "\033[42;36m --------------------------------------------------------- \033[0m"
         read -p "选择: " input
 
@@ -30,11 +31,12 @@ select_soc() {
             1) SOC=rk3562; break;;  # 选择rk3562
             2) SOC=rk3568; break;;  # 选择rk3568
             3) SOC=rk3588; break;;  # 选择rk3588
+			4) SOC=rk3576; break;;  # 选择rk3576
             *) echo -e "\033[42;36m 无效输入，请重试。 \033[0m";;  # 输入错误提示
         esac
     done
     echo -e "\033[42;36m 设置 SOC=$SOC...... \033[0m"
-    
+
     # 设置默认架构为 arm64
     ARCH="arm64" && echo -e "\033[42;36m 设置默认 ARCH=arm64...... \033[0m"
 }
@@ -67,7 +69,7 @@ install_packages() {
             MALI=bifrost-g52-g13p0
             ISP=rkaiq_rk3562
             BOARD_NAME="iTOP-RK3562"
-            RGA=rga            
+            RGA=rga
             ;;
         rk3568)
             MALI=bifrost-g52-g13p0
@@ -80,6 +82,12 @@ install_packages() {
             ISP=rkaiq_rk3588
             BOARD_NAME="iTOP-RK3588"
             RGA=rga2
+            ;;
+        rk3576)
+            MALI=bifrost-g52-g13p0
+            ISP=rkaiq_rk3576
+            BOARD_NAME="iTOP-RK3576"
+			RGA=rga
             ;;
     esac
 }
@@ -219,7 +227,7 @@ cat << EOF | chroot $TARGET_ROOTFS_DIR
     # 设置非交互模式安装软件包，防止出现交互提示
     export DEBIAN_FRONTEND=noninteractive
     export APT_INSTALL="apt-get install -fy --allow-downgrades"
-    
+
     \${APT_INSTALL} u-boot-tools edid-decode logrotate nfs-kernel-server
     if [[ "$TARGET" == "xfce" ]]; then
         apt-get remove -y gnome-bluetooth
