@@ -26,7 +26,6 @@ elif [ "$BOARD" == "rk3576" ]; then
 	toilet -f standard -F metal $(echo iTOP-RK3576)
 	echo performance > /sys/devices/system/cpu/cpufreq/policy0/scaling_governor
 	echo performance > /sys/devices/system/cpu/cpufreq/policy4/scaling_governor
-	echo performance > /sys/devices/system/cpu/cpufreq/policy6/scaling_governor
 	echo performance > /sys/devices/platform/27800000.gpu/devfreq/27800000.gpu/governor
 
 else
